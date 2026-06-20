@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galleria - Pasquale & Irene</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav id="navbar" style="padding: 1rem 5%;">
+        <div class="logo">P & I</div>
+        <ul class="nav-links">
+            <li><a href="index.html">← Torna alla Home</a></li>
+        </ul>
+    </nav>
+
+    <section class="section" style="margin-top: 60px;">
+        <h2>I vostri momenti live</h2>
+        <div class="container text-center">
+            <p>Inquadrate il QR Code o cliccate sul pulsante per inviare le vostre foto al sicuro.</p>
+            
+            <div class="qr-container">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=5&data=https://docs.google.com/forms/d/e/1FAIpQLSfpqJJBM_96LHfSZ_8ea6a86pJeac2DRFDN52_UqRVM3VJ1sA/viewform" alt="QR Code" class="qr-code">
+            </div>
+            
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfpqJJBM_96LHfSZ_8ea6a86pJeac2DRFDN52_UqRVM3VJ1sA/viewform" class="btn" target="_blank">Carica le tue Foto</a>
+
+            <div id="grid-galleria" class="gallery-grid">
+                <p id="loading-text" style="grid-column: 1 / -1; margin-top: 2rem;">Caricamento delle foto in corso...</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox" onclick="chiudiLightbox()">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
