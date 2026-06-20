@@ -113,3 +113,90 @@ window.onclick = function(event) {
 }
 
 document.addEventListener("DOMContentLoaded", caricaGalleria);
+
+// ==========================================
+// 4. GESTIONE BACHECA DEDICHE
+// ==========================================
+const scriptDedicheUrl = "https://script.google.com/macros/s/AKfycbynhGwLrxOk2C1lkpMHIeKZNRrgxD76XdsnU8atB8J0ygpTEqYO__oLjJFpXLU3wNve/exec";
+
+const formDedica = document.getElementById("form-dedica");
+const bachecaContainer = document.getElementById("bacheca-container");
+
+// Funzione per caricare i messaggi esistenti
+function caricaDediche() {
+    if (!bachecaContainer) return; // Esegue solo se siamo in dediche.html
+
+    fetch(scriptDedicheUrl)
+        .then(response => response.json())
+        .then(data => {
+            bachecaContainer.innerHTML = ""; // Pulisce il caricamento
+            
+            if (data.length === 0) {
+                bachecaContainer.innerHTML = "<p style='text-align:center;'>Nessun messaggio ancora. Sii il primo a scriverne uno!</p>";
+                return;
+            }
+
+            data.forEach(item => {
+                const card = `
+                    <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-left: 4px solid var(--secondary-color);">
+                        <p style="font-family: var(--font-text); font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem; font-style: italic;">"${item.messaggio}"</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: #666;">
+                            <span style="font-weight: bold; color: var(--primary-color);">${item.nome}</span>
+                            <span>${item.data}</span>
+                        </div>
+                    </div>
+                `;
+                bachecaContainer.innerHTML += card;
+            });
+        })
+        .catch(error => {
+            console.error("Errore recupero dediche:", error);
+            bachecaContainer.innerHTML = "<p style='text-align:center; color: red;'>Impossibile caricare i messaggi al momento.</p>";
+        });
+}
+
+// Funzione per inviare un nuovo messaggio
+if (formDedica) {
+    formDedica.addEventListener("submit", function(e) {
+        e.preventDefault(); // Evita il ricaricamento della pagina
+        
+        const btnInvia = document.getElementById("btn-invia");
+        const statusText = document.getElementById("form-status");
+        const inputNome = document.getElementById("nome").value.trim();
+        const inputMessaggio = document.getElementById("messaggio").value.trim();
+
+        // Feedback visivo
+        btnInvia.innerText = "Invio in corso...";
+        btnInvia.disabled = true;
+        statusText.innerText = "";
+
+        // Costruiamo l'URL con i parametri GET
+        // encodeURIComponent protegge il link da spazi e caratteri speciali
+        const urlParams = `?action=aggiungi&nome=${encodeURIComponent(inputNome)}&messaggio=${encodeURIComponent(inputMessaggio)}`;
+        
+        fetch(scriptDedicheUrl + urlParams)
+            .then(response => response.json())
+            .then(result => {
+                if(result.result === "success") {
+                    statusText.style.color = "green";
+                    statusText.innerText = "Dedica pubblicata con successo!";
+                    formDedica.reset(); // Pulisce i campi
+                    caricaDediche(); // Aggiorna la bacheca per mostrare il nuovo messaggio
+                } else {
+                    throw new Error("Errore dal server");
+                }
+            })
+            .catch(error => {
+                console.error("Errore invio dedica:", error);
+                statusText.style.color = "red";
+                statusText.innerText = "Si è verificato un errore. Riprova.";
+            })
+            .finally(() => {
+                btnInvia.innerText = "Pubblica Dedica";
+                btnInvia.disabled = false;
+            });
+    });
+}
+
+// Avvia il caricamento se siamo sulla pagina giusta
+document.addEventListener("DOMContentLoaded", caricaDediche);

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bacheca Dediche - Pasquale & Irene</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav id="navbar" style="padding: 1rem 5%;">
+        <div class="logo">P & I</div>
+        <ul class="nav-links">
+            <li><a href="index.html">← Torna alla Home</a></li>
+        </ul>
+    </nav>
+
+    <section class="section" style="margin-top: 60px;">
+        <h2>Lascia una Dedica</h2>
+        <div class="container text-center">
+            <p>Un pensiero, un augurio o semplicemente un saluto per noi.</p>
+            
+            <form id="form-dedica" class="form-container" style="max-width: 500px; margin: 2rem auto; text-align: left;">
+                <div style="margin-bottom: 1rem;">
+                    <label for="nome" style="display:block; margin-bottom: 0.5rem; font-family: var(--font-text);">La tua firma (Facoltativa)</label>
+                    <input type="text" id="nome" placeholder="Mario Rossi" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: var(--font-text);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label for="messaggio" style="display:block; margin-bottom: 0.5rem; font-family: var(--font-text);">Il tuo messaggio *</label>
+                    <textarea id="messaggio" rows="4" placeholder="Scrivi qui la tua dedica..." required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: var(--font-text); resize: vertical;"></textarea>
+                </div>
+                <button type="submit" class="btn" id="btn-invia" style="width: 100%;">Pubblica Dedica</button>
+                <p id="form-status" style="margin-top: 10px; font-weight: bold; text-align: center;"></p>
+            </form>
+
+            <hr style="margin: 3rem 0; border: 0; border-top: 1px solid #ddd;">
+
+            <h3>Bacheca dei Messaggi</h3>
+            <div id="bacheca-container" style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 600px; margin: 2rem auto; text-align: left;">
+                <p id="loading-dediche">Caricamento messaggi in corso...</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
